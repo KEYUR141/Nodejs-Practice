@@ -1,0 +1,11 @@
+{
+  "name": "server_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./start/index.js",
+  "scripts": {
+    "start": "node start server"
+  },
+  "author": "",
+  "license": "ISC"
+}
