@@ -3,6 +3,22 @@ const User = require('../models/User');
 const router = express.Router();
 const {v4: uuidv4} = require('uuid');
 
+
+//MiddleWare Implementation for parsing JSON and URL-encoded data
+router.use(express.urlencoded({extended: false}));
+
+router.use((req, res, next) => {
+    try {
+        console.log(`${req.method} ${req.url}`);
+        next();
+    } catch(error) {
+        res.status(500).json({
+            message: 'Error in logging request',
+            error: error.message,
+        })
+    }
+});
+
 //Fetch
 router.get('/users', async (req, res)=>{
     try {
