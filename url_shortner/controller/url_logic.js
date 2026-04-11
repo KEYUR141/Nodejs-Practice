@@ -1,5 +1,5 @@
 const {nanoid} = require('nanoid');
-const URL = require('..modles/URL');
+const URL = require('../models/url');
 
 async function generateShortUrl(req,res) {
     try{
@@ -12,13 +12,13 @@ async function generateShortUrl(req,res) {
         const shortID = nanoid(8);
 
         await URL.create({
-            shortID: shortID,
+            shortId: shortID,
             redirectUrl: body.url
         })
 
         return res.status(201).json({
             status: 'success',
-            shortUrl: `${req.headers.host}/${shortID}`,
+            shortUrl: `ShortId is ${shortID}`,
         });
     }
     catch(error) {
@@ -43,6 +43,9 @@ async function getAllURLRecords(req,res) {
             message: 'Error in fetching URL record',
             error: error.message,
         })
-}
-    
+}}
+
+module.exports = {
+    generateShortUrl,
+    getAllURLRecords,
 }
