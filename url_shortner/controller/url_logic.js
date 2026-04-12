@@ -18,7 +18,7 @@ async function generateShortUrl(req,res) {
 
         return res.status(201).json({
             status: 'success',
-            shortUrl: `ShortId is ${shortID}`,
+            shortUrl: shortID,
         });
     }
     catch(error) {

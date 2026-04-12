@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2.5em;
+}
+
+h2 {
+    color: #555;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+
+#urlForm {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="url"] {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+input[type="url"]:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+button {
+    padding: 12px 30px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #764ba2;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+#result {
+    background: #f0f9ff;
+    padding: 20px;
+    border-radius: 5px;
+    border-left: 4px solid #667eea;
+}
+
+#result p {
+    margin: 10px 0;
+    color: #333;
+    word-break: break-all;
+}
+
+#shortUrl {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+#shortUrl:hover {
+    text-decoration: underline;
+}
+
+#error {
+    color: #d32f2f;
+    padding: 15px;
+    background: #ffebee;
+    border-radius: 5px;
+    border-left: 4px solid #d32f2f;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    #urlForm {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+}

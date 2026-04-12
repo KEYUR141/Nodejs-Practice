@@ -3,31 +3,28 @@ const urlRoutes = require('./routes/routes');
 const app = express();
 const port = 8000;
 require('dotenv').config();
+const path = require('path');
 
 const URL = require('./models/url');
 const ConnectDB = require('./models/connect_db');
 ConnectDB();
 
+//View Engine Define
+app.set('view engine', 'ejs');
+app.set('views', path.resolve("./views"))
+
+
 app.use(express.json());
 
 app.use('/api', urlRoutes);
+app.use(express.static('./public'));
 
-
-app.get('/test-ejs/',(req,res)=> {
+app.get('/home',(req,res)=> {
     
     
     try { 
-        res.end(`
-        <html>
-        <head>
-        <title>Test EJS</title>
-        </head>
-        <body>
-        <h1>Test EJS</h1>
-        <p>This is a test EJS page.</p>
-        </body>
-        </html>`)
-        console.log('Hit on the ejs page at http://localhost:8000/test-ejs/');
+        res.render('page.ejs')
+        console.log('Hit on the ejs page at http://localhost:8000/home/');
     } catch (error) {
         console.error('Error in rendering EJS page', error);
         return res.status(500).json({

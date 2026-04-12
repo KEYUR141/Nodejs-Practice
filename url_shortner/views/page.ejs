@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>URL Shortener</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>URL Shortener</h1>
+            
+            <!-- Input Form -->
+            <form id="urlForm">
+                <input 
+                    type="url" 
+                    id="originalUrl" 
+                    placeholder="Enter your URL here..." 
+                    required
+                >
+                <button type="submit">Generate Short URL</button>
+            </form>
+
+            <!-- Display Short URL -->
+            <div id="result" style="display:none; margin-top: 20px;">
+                <h2>Your Short URL:</h2>
+                <p>
+                    <a id="shortUrl" href="#" target="_blank"></a>
+                </p>
+                <p id="shortUrlCopy"></p>
+            </div>
+
+            <!-- Error Message -->
+            <div id="error" style="display:none; color:red; margin-top: 20px;"></div>
+        </div>
+
+        <script>
+            document.getElementById('urlForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const originalUrl = document.getElementById('originalUrl').value;
+                const resultDiv = document.getElementById('result');
+                const errorDiv = document.getElementById('error');
+                
+                // Hide previous results
+                resultDiv.style.display = 'none';
+                errorDiv.style.display = 'none';
+                
+                try {
+                    // Send POST request to backend
+                    const response = await fetch('/api/shorten', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ url: originalUrl })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // Show short URL
+                        const shortUrlLink = `http://localhost:8000/${data.shortUrl.split('/').pop()}`;
+                        document.getElementById('shortUrl').href = shortUrlLink;
+                        document.getElementById('shortUrl').textContent = shortUrlLink;
+                        document.getElementById('shortUrlCopy').textContent = `Original: ${originalUrl}`;
+                        resultDiv.style.display = 'block';
+                        document.getElementById('originalUrl').value = '';
+                    } else {
+                        // Show error
+                        errorDiv.textContent = data.message || 'Error generating short URL';
+                        errorDiv.style.display = 'block';
+                    }
+                } catch (error) {
+                    errorDiv.textContent = 'Error: ' + error.message;
+                    errorDiv.style.display = 'block';
+                }
+            });
+        </script>
+    </body>
+</html>
