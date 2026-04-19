@@ -107,6 +107,180 @@ button:active {
     border-left: 4px solid #d32f2f;
 }
 
+/* Signup Form Styles */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 600;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+#signupForm {
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 0.95em;
+}
+
+.login-link {
+    text-align: center;
+    color: #666;
+    margin-top: 20px;
+}
+
+.login-link a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+/* Success and Error Box */
+.success-box,
+.error-box {
+    text-align: center;
+    padding: 40px;
+    border-radius: 10px;
+}
+
+.success-box {
+    background: #f0f9ff;
+    border-left: 4px solid #4caf50;
+}
+
+.success-box h1 {
+    color: #4caf50;
+    margin-bottom: 10px;
+}
+
+.error-box {
+    background: #ffebee;
+    border-left: 4px solid #d32f2f;
+}
+
+.error-box h1 {
+    color: #d32f2f;
+    margin-bottom: 10px;
+}
+
+.user-details {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.user-details p {
+    color: #333;
+    margin: 10px 0;
+}
+
+.error-message {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px 0;
+    color: #d32f2f;
+}
+
+.message {
+    color: #666;
+    margin: 20px 0;
+    line-height: 1.6;
+}
+
+/* Button Styles */
+.btn-primary,
+.btn-secondary {
+    display: inline-block;
+    padding: 12px 30px;
+    margin: 10px 5px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background: #667eea;
+    color: white;
+    width: 100%;
+}
+
+.btn-primary:hover {
+    background: #764ba2;
+}
+
+.btn-secondary {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.btn-secondary:hover {
+    background: #e0e0e0;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 30px;
+    flex-direction: column;
+}
+
+.button-group a {
+    text-align: center;
+}
+
+/* Alert Styles */
+.alert {
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.alert-error {
+    background: #ffebee;
+    color: #d32f2f;
+    border-left: 4px solid #d32f2f;
+}
+
+.alert-success {
+    background: #f0f9ff;
+    color: #4caf50;
+    border-left: 4px solid #4caf50;
+}
+
 @media (max-width: 600px) {
     .container {
         padding: 20px;
@@ -121,6 +295,14 @@ button:active {
     }
 
     button {
+        width: 100%;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group a {
         width: 100%;
     }
 }

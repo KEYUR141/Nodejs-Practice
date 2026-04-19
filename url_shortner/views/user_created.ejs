@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Account Created</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="success-box">
+                <h1>✓ Account Created Successfully!</h1>
+                <p class="subtitle">Welcome to our platform</p>
+                
+                <div class="user-details">
+                    <p><strong>Username:</strong> <%= user.user_name %></p>
+                    <p><strong>Email:</strong> <%= user.email %></p>
+                </div>
+
+                <p class="message">Your account has been created successfully. You can now log in with your credentials.</p>
+
+                <div class="button-group">
+                    <a href="/login" class="btn-primary">Go to Login</a>
+                    <a href="/home" class="btn-secondary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sign Up</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Create Account</h1>
+            <p class="subtitle">Join us today</p>
+            
+            <!-- Signup Form -->
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="user_name"
+                        placeholder="Enter your username..." 
+                        required
+                    >
+                    <small id="usernameError" style="color: red; display: none;"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email"
+                        placeholder="Enter your email..." 
+                        required
+                    >
+                    <small id="emailError" style="color: red; display: none;"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password"
+                        placeholder="Enter your password..." 
+                        required
+                    >
+                    <small id="passwordError" style="color: red; display: none;"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        id="confirmPassword" 
+                        name="confirmPassword"
+                        placeholder="Confirm your password..." 
+                        required
+                    >
+                    <small id="confirmError" style="color: red; display: none;"></small>
+                </div>
+
+                <button type="submit" class="btn-primary">Sign Up</button>
+            </form>
+
+            <!-- Already have account -->
+            <p class="login-link">
+                Already have an account? <a href="/login">Login here</a>
+            </p>
+
+            <!-- Error Message -->
+            <div id="error" style="display:none; margin-top: 20px;" class="alert alert-error"></div>
+
+            <!-- Success Message -->
+            <div id="success" style="display:none; margin-top: 20px;" class="alert alert-success"></div>
+        </div>
+
+        <script>
+            document.getElementById('signupForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                // Reset errors
+                document.getElementById('usernameError').style.display = 'none';
+                document.getElementById('emailError').style.display = 'none';
+                document.getElementById('passwordError').style.display = 'none';
+                document.getElementById('confirmError').style.display = 'none';
+                document.getElementById('error').style.display = 'none';
+                document.getElementById('success').style.display = 'none';
+                
+                let hasError = false;
+                
+                // Client-side validation
+                if (username.length < 3) {
+                    document.getElementById('usernameError').textContent = 'Username must be at least 3 characters';
+                    document.getElementById('usernameError').style.display = 'block';
+                    hasError = true;
+                }
+                
+                if (!email.includes('@')) {
+                    document.getElementById('emailError').textContent = 'Please enter a valid email';
+                    document.getElementById('emailError').style.display = 'block';
+                    hasError = true;
+                }
+                
+                if (password.length < 6) {
+                    document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+                    document.getElementById('passwordError').style.display = 'block';
+                    hasError = true;
+                }
+                
+                if (password !== confirmPassword) {
+                    document.getElementById('confirmError').textContent = 'Passwords do not match';
+                    document.getElementById('confirmError').style.display = 'block';
+                    hasError = true;
+                }
+                
+                if (hasError) return;
+                
+                try {
+                    // Send POST request to backend
+                    const response = await fetch('/api/users/signup', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ 
+                            user_name: username,
+                            email: email,
+                            password: password 
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        // Redirect to success page or home
+                        window.location.href = '/home';
+                    } else {
+                        const data = await response.json();
+                        document.getElementById('error').textContent = data.message || 'Error creating account';
+                        document.getElementById('error').style.display = 'block';
+                    }
+                } catch (error) {
+                    document.getElementById('error').textContent = 'Error: ' + error.message;
+                    document.getElementById('error').style.display = 'block';
+                }
+            });
+        </script>
+    </body>
+</html>

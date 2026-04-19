@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="stylesheet" href="/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Login</h1>
+            <p class="subtitle">Welcome back</p>
+            
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="emailOrUsername">Email or Username</label>
+                    <input 
+                        type="text" 
+                        id="emailOrUsername" 
+                        name="email_or_username"
+                        placeholder="Enter your email or username..." 
+                        required
+                    >
+                    <small id="emailUsernameError" style="color: red; display: none;"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password"
+                        placeholder="Enter your password..." 
+                        required
+                    >
+                    <small id="passwordError" style="color: red; display: none;"></small>
+                </div>
+
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+
+            <!-- Don't have account -->
+            <p class="signup-link">
+                Don't have an account? <a href="/signup">Sign up here</a>
+            </p>
+
+            <!-- Error Message -->
+            <div id="error" style="display:none; margin-top: 20px;" class="alert alert-error"></div>
+
+            <!-- Success Message -->
+            <div id="success" style="display:none; margin-top: 20px;" class="alert alert-success"></div>
+        </div>
+
+        <script>
+            document.getElementById('loginForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const emailOrUsername = document.getElementById('emailOrUsername').value;
+                const password = document.getElementById('password').value;
+                
+                // Reset errors
+                document.getElementById('emailUsernameError').style.display = 'none';
+                document.getElementById('passwordError').style.display = 'none';
+                document.getElementById('error').style.display = 'none';
+                document.getElementById('success').style.display = 'none';
+                
+                let hasError = false;
+                
+                // Client-side validation
+                if (emailOrUsername.length < 2) {
+                    document.getElementById('emailUsernameError').textContent = 'Please enter your email or username';
+                    document.getElementById('emailUsernameError').style.display = 'block';
+                    hasError = true;
+                }
+                
+                if (password.length < 6) {
+                    document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+                    document.getElementById('passwordError').style.display = 'block';
+                    hasError = true;
+                }
+                
+                if (hasError) return;
+                
+                try {
+                    // Send POST request to backend
+                    const response = await fetch('/api/users/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ 
+                            email_or_username: emailOrUsername,
+                            password: password 
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // Store user data (optional - for session management)
+                        localStorage.setItem('user', JSON.stringify(data.user));
+                        
+                        // Show success message
+                        document.getElementById('success').textContent = 'Login successful! Redirecting...';
+                        document.getElementById('success').style.display = 'block';
+                        
+                        // Redirect to home after 1.5 seconds
+                        setTimeout(() => {
+                            window.location.href = '/home';
+                        }, 1500);
+                    } else {
+                        document.getElementById('error').textContent = data.message || 'Invalid email/username or password';
+                        document.getElementById('error').style.display = 'block';
+                    }
+                } catch (error) {
+                    document.getElementById('error').textContent = 'Error: ' + error.message;
+                    document.getElementById('error').style.display = 'block';
+                }
+            });
+        </script>
+    </body>
+</html>
