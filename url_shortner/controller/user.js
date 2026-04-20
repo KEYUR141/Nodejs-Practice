@@ -1,5 +1,6 @@
 const User = require('../models/user');
-
+const {v4: uuidv4} = require('uuid');
+const { setUser } = require('../services/auth');
 
 async function createUser(req, res) {
     try {
@@ -35,6 +36,12 @@ async function authenticateUser(req, res) {
                 message: 'Invalid credentials',
             });
         }
+        const sessionId = uuidv4();
+        setUser(sessionId, user);
+        res.cookie('uid', sessionId);
+        // return res.redirect('/')
+
+
         return res.json({
             message: 'Authentication successful',
             user: user,

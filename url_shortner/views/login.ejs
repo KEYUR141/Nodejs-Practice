@@ -96,9 +96,10 @@
                         })
                     });
                     
-                    const data = await response.json();
-                    
+                    // Check if response is ok BEFORE parsing as JSON
                     if (response.ok) {
+                        const data = await response.json();
+                        
                         // Store user data (optional - for session management)
                         localStorage.setItem('user', JSON.stringify(data.user));
                         
@@ -111,7 +112,12 @@
                             window.location.href = '/home';
                         }, 1500);
                     } else {
-                        document.getElementById('error').textContent = data.message || 'Invalid email/username or password';
+                        try {
+                            const data = await response.json();
+                            document.getElementById('error').textContent = data.message || 'Login failed';
+                        } catch (e) {
+                            document.getElementById('error').textContent = 'Invalid email/username or password';
+                        }
                         document.getElementById('error').style.display = 'block';
                     }
                 } catch (error) {

@@ -6,6 +6,13 @@ const port = 8000;
 require('dotenv').config();
 const path = require('path');
 
+//MiddleWare
+const authMiddleware = require('./middleware/auth');
+
+//Cookie Parser
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 const URL = require('./models/url');
 const ConnectDB = require('./models/connect_db');
 ConnectDB();
@@ -21,11 +28,9 @@ app.use('/api', urlRoutes);
 app.use('/api/users', userRoutes);
 app.use(express.static('./public'));
 
-app.get('/home',(req,res)=> {
-    
-    
+app.get('/home', authMiddleware, (req,res)=> {
     try { 
-        res.render('page.ejs')
+        res.render('page.ejs', { user: req.user });
         console.log('Hit on the ejs page at http://localhost:8000/home/');
     } catch (error) {
         console.error('Error in rendering EJS page', error);
@@ -70,6 +75,10 @@ app.get('/:shortId', async(req,res) => {
             }
             }
         );
+        
+        if(!record) {
+            return res.status(404).json({ message: 'Short URL not found' });
+        }
         
         return res.redirect(record.redirectUrl);
     }
