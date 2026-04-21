@@ -138,11 +138,21 @@
                     });
                     
                     if (response.ok) {
-                        // Redirect to success page or home
-                        window.location.href = '/home';
+                        // Show success message and redirect to login
+                        document.getElementById('success').textContent = 'Account created successfully! Redirecting to login...';
+                        document.getElementById('success').style.display = 'block';
+                        setTimeout(() => {
+                            window.location.href = '/login';
+                        }, 2000);
                     } else {
-                        const data = await response.json();
-                        document.getElementById('error').textContent = data.message || 'Error creating account';
+                        try {
+                            const data = await response.json();
+                            const errorMessage = data.message || 'Error creating account';
+                            const errorDetails = data.error ? ` - ${data.error}` : '';
+                            document.getElementById('error').textContent = errorMessage + errorDetails;
+                        } catch (e) {
+                            document.getElementById('error').textContent = 'Error creating account';
+                        }
                         document.getElementById('error').style.display = 'block';
                     }
                 } catch (error) {

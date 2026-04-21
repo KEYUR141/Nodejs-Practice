@@ -68,8 +68,10 @@
                         resultDiv.style.display = 'block';
                         document.getElementById('originalUrl').value = '';
                     } else {
-                        // Show error
-                        errorDiv.textContent = data.message || 'Error generating short URL';
+                        // Show error with actual error details
+                        const errorMessage = data.message || 'Error generating short URL';
+                        const errorDetails = data.error ? ` - ${data.error}` : '';
+                        errorDiv.textContent = errorMessage + errorDetails;
                         errorDiv.style.display = 'block';
                     }
                 } catch (error) {

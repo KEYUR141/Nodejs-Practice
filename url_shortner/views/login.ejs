@@ -114,7 +114,9 @@
                     } else {
                         try {
                             const data = await response.json();
-                            document.getElementById('error').textContent = data.message || 'Login failed';
+                            const errorMessage = data.message || 'Login failed';
+                            const errorDetails = data.error ? ` - ${data.error}` : '';
+                            document.getElementById('error').textContent = errorMessage + errorDetails;
                         } catch (e) {
                             document.getElementById('error').textContent = 'Invalid email/username or password';
                         }
