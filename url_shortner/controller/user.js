@@ -44,13 +44,14 @@ async function authenticateUser(req, res) {
         }
         // const sessionId = uuidv4();
         const token = setUser(user);
-        res.cookie('token', token);
+        //res.cookie('token', token);
         // return res.redirect('/')
 
 
         return res.json({
             message: 'Authentication successful',
-            user: user,
+            //user: user,
+            token: token
         });
     } catch (error) {
         console.error('Error authenticating user:', error);
