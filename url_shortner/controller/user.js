@@ -4,12 +4,13 @@ const { setUser } = require('../services/auth');
 
 async function createUser(req, res) {
     try {
-        const { user_name, email, password} = req.body;
+        const { user_name, email, password, role } = req.body;
 
         const newuser = await User.create({
             user_name,
             email,
             password,
+            role
         });
         
         return res.status(201).json({
@@ -44,13 +45,10 @@ async function authenticateUser(req, res) {
         }
         // const sessionId = uuidv4();
         const token = setUser(user);
-        //res.cookie('token', token);
-        // return res.redirect('/')
-
-
+        res.cookie('token', token);
+        
         return res.json({
             message: 'Authentication successful',
-            //user: user,
             token: token
         });
     } catch (error) {

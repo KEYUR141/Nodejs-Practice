@@ -15,10 +15,14 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    role: {
+        type: String,
+        enum: ['Admin', 'Normal_User'],
+        default: 'Normal_User'
+    },
     created_at: {
         type: Date,
         default: Date.now
-    
     },
     updated_at: {
         type: Date,

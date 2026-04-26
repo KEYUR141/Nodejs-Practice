@@ -100,8 +100,8 @@
                     if (response.ok) {
                         const data = await response.json();
                         
-                        // Store user data (optional - for session management)
-                        localStorage.setItem('user', JSON.stringify(data.user));
+                        // Store token for future requests
+                        localStorage.setItem('token', data.token);
                         
                         // Show success message
                         document.getElementById('success').textContent = 'Login successful! Redirecting...';

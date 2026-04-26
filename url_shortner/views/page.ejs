@@ -48,11 +48,15 @@
                 errorDiv.style.display = 'none';
                 
                 try {
+                    // Get token from localStorage for API calls
+                    const token = localStorage.getItem('token');
+                    
                     // Send POST request to backend
                     const response = await fetch('/api/shorten', {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
                         },
                         body: JSON.stringify({ url: originalUrl })
                     });

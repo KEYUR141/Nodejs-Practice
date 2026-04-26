@@ -4,7 +4,8 @@ const secretKey = 'kendall@Roy';
 function setUser(user) {
     payload = {
         id: user._id,
-        email: user.email
+        email: user.email,
+        role: user.role
     }
     return jwt.sign(payload, secretKey);
 }
@@ -12,7 +13,11 @@ function setUser(user) {
 function getUser(token) {
     //return sessionIdtoUserMap.get(id);
     if(!token) return null;
-    return jwt.verify(token, secretKey);
+    try {
+        return jwt.verify(token, secretKey);
+    } catch(error) {
+        return null;
+    }
 }
 
 module.exports = {

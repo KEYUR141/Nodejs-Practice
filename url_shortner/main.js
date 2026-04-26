@@ -7,7 +7,7 @@ require('dotenv').config();
 const path = require('path');
 
 //MiddleWare
-const authMiddleware = require('./middleware/auth');
+const { authMiddleware } = require('./middleware/auth');
 
 //Cookie Parser
 const cookieParser = require('cookie-parser');

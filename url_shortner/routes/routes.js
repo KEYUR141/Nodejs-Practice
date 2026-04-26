@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middleware/auth');
+const { authMiddleware, restrictTo } = require('../middleware/auth');
 const URL = require('../models/url');
 
 const {generateShortUrl, getAllURLRecords} = require('../controller/url_logic');
 
-router.post('/shorten', authMiddleware, generateShortUrl);
-router.get('/records', authMiddleware, getAllURLRecords);
+router.post('/shorten', authMiddleware, restrictTo(['Normal_User']), generateShortUrl);
+router.get('/records', authMiddleware, restrictTo(['Normal_User']), getAllURLRecords);
 
 module.exports = router;
